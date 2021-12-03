@@ -1,0 +1,60 @@
+class PReg:
+    p = 0
+    ti = 0
+    td = 0
+    dt = 0
+
+    maxOutput = 0
+    minOutput = 0
+    maxOutputRampRate = 0
+    deadzone = 0.2
+
+    def __init__(self, p: float, ti: float, td: float, dt: float):
+        self.p = p
+        self.ti = ti
+        self.td = td
+        self.dt = dt
+
+    def setOutputLimits(self, minimum: float, maximum: float):
+        if maximum < minimum:
+            return
+        self.maxOutput = maximum
+        self.minOutput = minimum
+
+    def getOutput(self, actual: float, setpoint: float):
+        error = setpoint - actual
+        if error >= self.deadzone:
+            output = 10
+        elif error >= -self.deadzone and error <= self.deadzone:
+            output = 0
+        else:
+            output = -10
+        return output
+
+    def SetMaxOutputRampRate(self, rate):
+        self.maxOutputRampRate = rate
+
+
+if __name__ == '__main__':
+    p = 10
+    td = 0.1
+    ti = 1
+    dt = 0.1
+    reg = PReg(p, ti, td, dt)
+    reg.setOutputLimits(-1.8, 1.8)
+    k = 1.0
+    T = 1.0
+    dt = 0.1
+    u = 0
+    r = 0
+    y = 0
+    y1 = 0
+    print("Target\tOutput\tControl\tError")
+
+    for i in range(100):
+        if i == 20:
+            r = 1
+        u = reg.getOutput(y1, r)
+        y1 = k * dt / T * u + (T - dt) / T * y
+        y = y1
+        print("%3.2f\t%3.2f\t%3.2f\t%3.2f" % (r, y1, u, (r - y1)))

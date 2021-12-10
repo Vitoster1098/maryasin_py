@@ -42,7 +42,7 @@ class DeltaPIDRegulator:
         self.last2Error = self.lastError
         self.lastError = error
         self.lastOutput = output
-        return output;
+        return output
 
     def constrain(self, value, min, max):
         if value > max:

@@ -17,11 +17,11 @@ class PReg:
         self.minOutput = minimum
 
     def getOutput(self, actual: float, setpoint: float):
-        aestActual = self.eastActual
+        self.aestActual = self.eastActual
         error = setpoint - actual
         Poutput = error
         Doutput = self.D * (actual - self.eastActual)
-        aestActual = actual
+        self.aestActual = actual
         output = self.P * (Poutput + Doutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
         return output

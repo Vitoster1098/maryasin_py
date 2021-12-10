@@ -3,13 +3,14 @@ class PReg:
     D = 0
     I = 0
     setpoint = 0
-    eastActual = 0
+    lastActual = 0
     maxOutput = 0
     minOutput = 0
     errorSum = 0
     maxError = 0
     lastOutput = 0
     maxOutputRampRate = 0
+    firstRun = True
 
     def __init__(self, p: float, d: float, i: float):
         self.P = p
@@ -30,19 +31,20 @@ class PReg:
             self.maxError = self.errorSum
         else:
             self.errorSum = self.maxError
+
         Ioutput = self.I * self.errorSum
-        Doutput = self.D * (actual - self.eastActual)
-        self.aestActual = actual
+        Doutput = self.D * (actual - self.lastActual)
+        self.lastActual = actual
         output = self.P * (Poutput + Doutput + Ioutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
         if self.maxOutputRampRate != 0:
             output = self.constrain(output - self.lastOutput,
-                                    self.eastActual - self.maxOutputRampRate,
-                                    self.eastActual + self.maxOutputRampRate)
+                                    self.lastActual - self.maxOutputRampRate,
+                                    self.lastActual + self.maxOutputRampRate)
             self.lastOutput = output
         return output
 
-    def SetMaxOutputRampRate(self, rate):
+    def setMaxOutputRampRate(self, rate):
         self.maxOutputRampRate = rate
 
     def constrain(self, value: float, min: float, max: float):
@@ -58,10 +60,11 @@ class PReg:
 
 if __name__ == '__main__':
     p = 10
-    d = 0.1
+    d = 0.2
     ti = 1
     reg = PReg(p, d, ti)
     reg.setOutputLimits(-1.8, 1.8)
+    reg.setMaxOutputRampRate(1)
     k = 1.0
     T = 1.0
     dt = 0.1

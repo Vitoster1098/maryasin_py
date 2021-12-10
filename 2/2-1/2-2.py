@@ -37,6 +37,7 @@ if __name__ == '__main__':
     p = 10
     ti = 1
     reg = PReg(p, ti)
+    reg.setOutputLimits(-1.8, 1.8)
     k = 1.0
     T = 1.0
     dt = 0.1

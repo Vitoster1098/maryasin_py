@@ -1,4 +1,4 @@
-#Параллельный
+# Параллельный
 class PIDregulator:
     P = 0
     D = 0
@@ -12,6 +12,7 @@ class PIDregulator:
     maxError = 0
     lastOutput = 0
     maxOutputRampRate = 0
+
     def __init__(self, p: float, d: float, i: float):
         self.P = p
         self.D = d
@@ -41,7 +42,8 @@ class PIDregulator:
         output = self.P * (Poutput + Doutput + Ioutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
         if self.maxOutputRampRate != 0:
-            output = self.constrain(output - self.lastOutput, eastActual - self.maxOutputRampRate, eastActual + self.maxOutputRampRate)
+            output = self.constrain(output - self.lastOutput, eastActual - self.maxOutputRampRate,
+                                    eastActual + self.maxOutputRampRate)
         self.lastOutput = output
         return output
 
@@ -51,5 +53,6 @@ class PIDregulator:
         if value < min:
             return min
         return value
+
     def Bounded(self, value, min, max):
         return (min < value) and (max > value)

@@ -37,7 +37,8 @@ class DeltaPIDRegulator:
         output = q0 * error + q1 * self.lastError * q2 * self.last2Error
         output = self.constrain(output, self.minOutput, self.maxOutput)
         if self.maxOutputRampRate != 0:
-            output = self.constrain(output, self.lastOutput-self.maxOutputRampRate, self.lastOutput+self.maxOutputRampRate)
+            output = self.constrain(output - self.lastOutput, self.lastOutput - self.maxOutputRampRate,
+                                    self.lastOutput + self.maxOutputRampRate)
 
         self.last2Error = self.lastError
         self.lastError = error

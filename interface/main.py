@@ -10,7 +10,7 @@ from DeltaPIDRegulator import DeltaPIDRegulator
 def startProgram():
     p = 10
     ti = 1
-    td = 0.1
+    td = 0.2
     dt = 0.1
     maxOutput = 0
     minOutput = 0
@@ -49,7 +49,7 @@ def startProgram():
     r = 0
     y = 0
     y1 = 0
-    u = 1.8
+    u = 0
     T = 1.0
 
     print("Target\tOutput\tControl\tError\n")

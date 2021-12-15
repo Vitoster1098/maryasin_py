@@ -35,6 +35,7 @@ class PReg:
         self.eastActual = actual
         output = self.P * (Poutput + Doutput + Ioutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
+        self.eastActual = output
         return output
 
     def constrain(self, value: float, min: float, max: float):

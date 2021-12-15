@@ -40,7 +40,7 @@ class PReg:
 
 if __name__ == '__main__':
     p = 10
-    d = 0.1
+    d = 0.2
     ti = 1
     reg = PReg(p, d, ti)
     reg.setOutputLimits(-1.8, 1.8)

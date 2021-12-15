@@ -17,7 +17,6 @@ class PReg:
         self.minOutput = minimum
 
     def getOutput(self, actual: float, setpoint: float):
-        self.aestActual = self.eastActual
         error = setpoint - actual
         Poutput = error
         Doutput = self.D * (actual - self.eastActual)

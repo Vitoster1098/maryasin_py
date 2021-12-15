@@ -21,7 +21,7 @@ class PReg:
         error = setpoint - actual
         Poutput = error
         Doutput = self.D * (actual - self.eastActual)
-        self.aestActual = actual
+        self.eastActual = actual
         output = self.P * (Poutput + Doutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
         return output

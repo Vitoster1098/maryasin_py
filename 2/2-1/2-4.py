@@ -25,7 +25,7 @@ class PReg:
         self.errorSum += error
         Ioutput = self.I * self.errorSum
         Doutput = self.D * (actual - self.eastActual)
-        self.aestActual = actual
+        self.eastActual = actual
         output = self.P * (Poutput + Doutput + Ioutput)
         output = self.constrain(output, self.minOutput, self.maxOutput)
         return output

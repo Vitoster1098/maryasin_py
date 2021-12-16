@@ -10,6 +10,7 @@ class PReg:
     maxError = 0
     lastOutput = 0
     maxOutputRampRate = 0
+    firstRun = True
 
     def __init__(self, p: float, d: float, i: float):
         self.P = p
@@ -25,6 +26,11 @@ class PReg:
     def getOutput(self, actual: float, setpoint: float):
         error = setpoint - actual
         Poutput = error
+        if self.firstRun:
+            self.errorSum = 0
+            self.eastActual = actual
+            self.lastOutput = Poutput
+            self.firstRun = False
         if self.Bounded(self.lastOutput, self.minOutput, self.maxOutput):
             self.errorSum += error
             self.maxError = self.errorSum

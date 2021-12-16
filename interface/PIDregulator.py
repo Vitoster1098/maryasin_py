@@ -12,6 +12,7 @@ class PIDregulator:
     maxError = 0
     lastOutput = 0
     maxOutputRampRate = 0
+    firstRun = True
 
     def __init__(self, p: float, d: float, i: float):
         self.P = p
@@ -30,6 +31,11 @@ class PIDregulator:
     def getOutput(self, actual, setpoint):
         error = setpoint - actual
         Poutput = error * self.P
+        if self.firstRun:
+            self.errorSum = 0
+            self.eastActual = actual
+            self.lastOutput = Poutput
+            self.firstRun = False
         if self.Bounded(self.lastOutput, self.minOutput, self.maxOutput):
             self.errorSum += error
             self.maxError = self.errorSum
@@ -39,7 +45,7 @@ class PIDregulator:
         Ioutput = self.I * self.errorSum
         Doutput = self.D * (actual - self.eastActual)
         eastActual = actual
-        output = self.P * (Poutput + Doutput + Ioutput)
+        output = Poutput + Doutput + Ioutput
         output = self.constrain(output, self.minOutput, self.maxOutput)
         if self.maxOutputRampRate != 0:
             output = self.constrain(output - self.lastOutput, eastActual - self.maxOutputRampRate,

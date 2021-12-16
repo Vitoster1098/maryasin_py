@@ -10,7 +10,6 @@ class PReg:
     maxError = 0
     lastOutput = 0
     maxOutputRampRate = 0
-    firstRun = True
 
     def __init__(self, p: float, d: float, i: float):
         self.P = p

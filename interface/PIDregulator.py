@@ -44,7 +44,7 @@ class PIDregulator:
         Ioutput = self.I * self.errorSum
         Doutput = self.D * (actual - self.eastActual)
         eastActual = actual
-        output = self.P * (Poutput + Doutput + Ioutput)
+        output = Poutput + Doutput + Ioutput
         output = self.constrain(output, self.minOutput, self.maxOutput)
         if self.maxOutputRampRate != 0:
             output = self.constrain(output - self.lastOutput, eastActual - self.maxOutputRampRate,
